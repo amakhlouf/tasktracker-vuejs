@@ -35,8 +35,17 @@
 			}
 		},
 		methods: {
-			addTask(newTask) {
-				this.tasks = [...this.tasks, newTask]
+			async addTask(newTask) {
+				const res = await fetch('api/tasks', {
+					method: 'POST',
+					headers: {
+						'Content-type': 'application/json'
+					},
+					body: JSON.stringify(newTask)
+				})
+				const data = await res.json()
+				
+				this.tasks = [...this.tasks, data]
 			},
 			toggleAddTask() {
 				this.showAddTask = !this.showAddTask
